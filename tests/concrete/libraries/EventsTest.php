@@ -1,6 +1,6 @@
 <?php
 
-require_once dirname(__FILE__) . '/../../../web/concrete/libraries/events.php';
+require_once dirname(__FILE__) . '/../../../core/concrete5/web/concrete/libraries/events.php';
 
 /**
  * Test class for Events.

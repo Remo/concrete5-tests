@@ -1,5 +1,5 @@
 <?php
-require_once dirname(__FILE__) . '/../../../web/concrete/models/config.php';
+require_once dirname(__FILE__) . '/../../../core/concrete5/web/concrete/models/config.php';
 
 class ConfigTest extends PHPUnit_Framework_TestCase {
 

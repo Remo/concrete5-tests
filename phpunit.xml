@@ -1,5 +1,5 @@
 <phpunit
-	bootstrap="tests/bootstrap.php">
+	bootstrap="./bootstrap.php">
 	<testsuites>
 		<testsuite name="all_models">
 			<directory>tests/concrete/models/</directory>
@@ -18,4 +18,10 @@
 			<directory>tests/concrete/helpers/</directory>
 		</testsuite>
 	</testsuites>
+	<php>
+		<env name="DB_USERNAME" value="testing" />
+		<env name="DB_PASSWORD" value="testing" />
+		<env name="DB_DATABASE" value="testing" />
+		<env name="DB_SERVER" value="localhost" />
+	</php>
 </phpunit>
