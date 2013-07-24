@@ -7,10 +7,13 @@ class AreaTest extends PHPUnit_Extensions_Database_TestCase {
 	}
 
 	public function getDataSet() {
-
 		$dataSets = array();
 		foreach (array(
-			'Config'
+			'Config',
+			'Pages',
+			'Collections',
+			'CollectionVersions',
+			'Areas'
 		) as $table) {
 			$dataSets[] = $this->createMySQLXMLDataSet($GLOBALS['C5_TEST_BASE_DIR'] . '/fixtures/' . $table . '.xml');
 		}
@@ -18,8 +21,7 @@ class AreaTest extends PHPUnit_Extensions_Database_TestCase {
 	}
 
 	public function setUp() {
-		$this->getConnection();
-		$this->getDataSet();
+		parent::setUp();
 		// Set error level
 		error_reporting(E_ERROR | E_WARNING | E_USER_ERROR);
 
@@ -40,46 +42,35 @@ class AreaTest extends PHPUnit_Extensions_Database_TestCase {
 
 	}
 
-	public function testAutoload() {
-		$area = new Area('Main');
-		$this->assertThat(
-			$area,
-			$this->isInstanceOf(
-				'Area'
-			)
-		);
+	public function testGetPermissionObjectIdentifier() {
+		$area = Area::getOrCreate(Page::getByID(HOME_CID), 'Testing');
+		$this->assertEquals($area->getPermissionObjectIdentifier(), '1:Testing');
 	}
 
-	public function testIsGlobalArea() {
-		$this->markTestIncomplete();
+	public function testGetCollectionID() {
+		$area = Area::getOrCreate(Page::getByID(HOME_CID), 'Testing');
+		$this->assertEquals($area->getCollectionID(), HOME_CID);
 	}
 
-	public function testGetAreaID() {
-		$area = new Area('Testing');
-		$area->arID = 1;
+	public function testGetAreaCollectionObject() {
+		$area = Area::getOrCreate(Page::getByID(HOME_CID), 'Testing');
+		$page = $area->getAreaCollectionObject();
+		$this->assertInstanceOf('Page', $page);
+		$this->assertEquals(1, $page->getCollectionID());
+	}
+
+	public function testGetAreaHandleFromID() {
+		$this->assertEquals('Header', Area::getAreaHandleFromID(1));
+	}
+
+	public function testGet() {
+		$area = Area::get(Page::getByID(105), 'Header');
+		$this->assertInstanceOf('Area', $area);
 		$this->assertEquals(1, $area->getAreaID());
-	}
-
-	public function testGetAreaHandle() {
-		$area = new Area('Testing');
-		$this->assertEquals('Testing', $area->getAreaHandle());
-	}
-
-	public function testGetCustomTemplates() {
-		$this->markTestIncomplete();
-	}
-
-	public function testSetCustomTemplate() {
-		$this->markTestIncomplete();
-	}
-
-	public function testGetTotalBlocksInArea() {
-		$this->markTestIncomplete();
-	}
-
-	public function testOverrideCollectionPermissions() {
-		$area = new Area('Testing');
-		$area->arOverrideCollectionPermissions = 1;
-		$this->assertEquals(1, $area->overrideCollectionPermissions());
+		$this->assertEquals(105, $area->getCollectionID());
+		$this->assertEquals('Header', $area->getAreaHandle());
+		$this->assertEquals(0, $area->overrideCollectionPermissions());
+		$this->assertEquals(0, $area->getAreaCollectionInheritID());
+		$this->assertEquals(0, $area->isGlobalArea());
 	}
 }

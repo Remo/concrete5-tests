@@ -2,5 +2,6 @@
 .DS_Store
 .project
 core/
+fixtures/
 db_dump.sql
 db_fixture.xml
