@@ -53,6 +53,8 @@ if (getenv('C5_REINSTALL') || !file_exists($dir.'/db_dump.sql') || !file_exists(
 	shell_exec(
 		$dir.'/split_fixture.php'
 	);
+} else {
+	exec('mysql -u '.getenv('DB_USERNAME').' -p'.getenv('DB_PASSWORD').' '.getenv('DB_DATABASE').' < '.$dir.'/db_dump.sql');
 }
 /*
 } else {
