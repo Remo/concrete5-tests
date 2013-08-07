@@ -3,6 +3,10 @@
  * @author jshannon
  */
 
+function getenv2($variable) {
+	return $_ENV[$variable];
+}
+
 // TODO: check include path
 //ini_set('include_path', ini_get('include_path'));
 $dir = dirname(__FILE__);
@@ -27,12 +31,12 @@ shell_exec(
 );
 chdir($dir);
 // Reinstall C5
-if (getenv('C5_REINSTALL') || !file_exists($dir.'/db_dump.sql') || !file_exists($dir.'/core/concrete5/web/config/site.php')) {
+if (getenv2('C5_REINSTALL') || !file_exists($dir.'/db_dump.sql') || !file_exists($dir.'/core/concrete5/web/config/site.php')) {
 	$cmd = $dir.'/install-concrete5.php'.
-		' --db-server='.getenv('DB_SERVER').
-		' --db-username='.getenv('DB_USERNAME').
-		' --db-password='.getenv('DB_PASSWORD').
-		' --db-database='.getenv('DB_DATABASE').
+		' --db-server='.getenv2('DB_SERVER').
+		' --db-username='.getenv2('DB_USERNAME').
+		' --db-password='.getenv2('DB_PASSWORD').
+		' --db-database='.getenv2('DB_DATABASE').
 		' --admin-password=password'.
 		' --admin-email=admin@example.com'.
 		' --starting-point=standard'.
@@ -45,26 +49,26 @@ if (getenv('C5_REINSTALL') || !file_exists($dir.'/db_dump.sql') || !file_exists(
 		' --target='.$dir.'/core/concrete5/web';
 	echo(shell_exec($cmd));
 	shell_exec(
-		'mysqldump --xml -t -u '.getenv('DB_USERNAME').' -p'.getenv('DB_PASSWORD').' '.getenv('DB_DATABASE').' > '.$dir.'/db_fixture.xml'
+		'mysqldump --xml -t -u '.getenv2('DB_USERNAME').' -p'.getenv2('DB_PASSWORD').' '.getenv2('DB_DATABASE').' > '.$dir.'/db_fixture.xml'
 	);
 	shell_exec(
-		'mysqldump -u '.getenv('DB_USERNAME').' -p'.getenv('DB_PASSWORD').' '.getenv('DB_DATABASE').' > '.$dir.'/db_dump.sql'
+		'mysqldump -u '.getenv2('DB_USERNAME').' -p'.getenv2('DB_PASSWORD').' '.getenv2('DB_DATABASE').' > '.$dir.'/db_dump.sql'
 	);
 	shell_exec(
 		$dir.'/split_fixture.php'
 	);
 } else {
-	exec('mysql -u '.getenv('DB_USERNAME').' -p'.getenv('DB_PASSWORD').' '.getenv('DB_DATABASE').' < '.$dir.'/db_dump.sql');
+	exec('mysql -u '.getenv2('DB_USERNAME').' -p'.getenv2('DB_PASSWORD').' '.getenv2('DB_DATABASE').' < '.$dir.'/db_dump.sql');
 }
 /*
 } else {
 	shell_exec(
-		'mysql -u '.getenv('DB_USERNAME').' -p'.getenv('DB_PASSWORD').' '.getenv('DB_DATABASE').' < '.$dir.'/db_dump.sql'
+		'mysql -u '.getenv2('DB_USERNAME').' -p'.getenv2('DB_PASSWORD').' '.getenv2('DB_DATABASE').' < '.$dir.'/db_dump.sql'
 	);
 }
 */
-$GLOBALS['DB_DATABASE'] = getenv('DB_DATABASE');
-$GLOBALS['DB_SERVER'] = getenv('DB_SERVER');
-$GLOBALS['DB_PASSWORD'] = getenv('DB_PASSWORD');
-$GLOBALS['DB_USERNAME'] = getenv('DB_USERNAME');
+$GLOBALS['DB_DATABASE'] = getenv2('DB_DATABASE');
+$GLOBALS['DB_SERVER'] = getenv2('DB_SERVER');
+$GLOBALS['DB_PASSWORD'] = getenv2('DB_PASSWORD');
+$GLOBALS['DB_USERNAME'] = getenv2('DB_USERNAME');
 $GLOBALS['C5_TEST_BASE_DIR'] = $dir;
