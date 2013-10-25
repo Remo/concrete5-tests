@@ -2,12 +2,16 @@ language: php
 
 php:
   - 5.4
+  - 5.3
+
+env:
+  - CONCRETE5_VERSION="5.6.2.1" CONCRETE5_URL="http://www.concrete5.org/download_file/-/view/58379/8497/"
 
 before_script:
     - composer install
     - echo 'short_open_tag = On' >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-    - curl -sS http://www.concrete5.org/download_file/-/view/58379/8497/ > concrete5.zip
+    - curl -sS $CONCRETE5_URL > concrete5.zip
     - unzip concrete5.zip
-    - mv concrete5.6.2.1 web
+    - mv concrete$CONCRETE5_VERSION web
     - mysql -e 'CREATE DATABASE concrete5_tests;'
     - vendor/bin/install-concrete5.php --db-server=localhost --db-username=travis --db-database=concrete5_tests --admin-email=webmaster@example.org --admin-password=password --target=../../../web
