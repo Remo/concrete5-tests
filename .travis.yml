@@ -5,6 +5,7 @@ php:
 
 before_script:
     - composer install
+    - echo 'short_open_tag = On' >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
     - curl -sS http://www.concrete5.org/download_file/-/view/58379/8497/ > concrete5.zip
     - unzip concrete5.zip
     - mv concrete5.6.2.1 web
