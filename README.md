@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/concrete5/concrete5-tests.png)](https://travis-ci.org/concrete5/concrete5-tests)
+
 # Step 1: Install PHPUnit
 
 Install PHPUnit through Pear, MacPorts, or whatever system you use. It is available for many packaging systems. When done, you should be able to run "phpunit" from your command line and get a help response.
