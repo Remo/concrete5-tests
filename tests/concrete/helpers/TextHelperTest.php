@@ -28,7 +28,7 @@ class TextHelperTest extends PHPUnit_Framework_TestCase
 
     public function testUrlify() 
     {
-        $this->assertEquals("this-is-a-simple-test-case", $this->object->urlify("This is a simple test case"));
+        $this->assertEquals("simple-test-case", $this->object->urlify("This is a simple test case"));
         $this->assertEquals ('jetudie-le-francais', $this->object->urlify(' J\'étudie le français '));
         $this->assertEquals ('lo-siento-no-hablo-espanol', $this->object->urlify('Lo siento, no hablo español.'));
         $this->assertEquals ('f3pws', $this->object->urlify('ΦΞΠΏΣ'));
