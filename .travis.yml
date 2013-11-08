@@ -5,7 +5,7 @@ php:
   - 5.3
 
 env:
-  - REF="" # latest
+  - REF=" " # latest
   - REF="master"
   - REF="5.7.0-wip"
 
