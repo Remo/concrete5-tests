@@ -1,13 +1,10 @@
 language: php
 
-php:
-  - 5.4
-  - 5.3
-
 env:
-  - REF=" " # latest
+  - REF="" # latest tag
   - REF="master"
   - REF="5.7.0-wip"
+  - REF="5.6.1.2"
 
 before_script:
     - composer install
@@ -15,7 +12,7 @@ before_script:
     - git clone https://github.com/concrete5/concrete5.git
     - cd concrete5
     - git checkout `git describe --abbrev=0 --tags` # checkout latest tag
-    - git checkout $REF
+    - git checkout $REF # has no effect if REF=""
     - cd ..
     - mv concrete5/web web
     - mysql -e 'CREATE DATABASE concrete5_tests;'
