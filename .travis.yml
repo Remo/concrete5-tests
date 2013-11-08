@@ -23,3 +23,4 @@ script: phpunit --testsuite all_helpers
 matrix:
   allow_failures:
     - env: REF="5.7.0-wip"
+    - env: REF="5.6.1.2"
