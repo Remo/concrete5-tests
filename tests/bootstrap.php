@@ -27,5 +27,7 @@ require(DIR_BASE . '/concrete/dispatcher.php');
 User::getByUserID(1, true);
 Log::addEntry('bootsrapped','unit tests');
 
-?>
+// include adodb-lib to avoid a PHPUnit problem with globals
+include(ADODB_DIR.'/adodb-lib.inc.php');
 
+?>
