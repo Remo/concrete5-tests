@@ -1,19 +1,26 @@
 language: php
 
-php:
-  - 5.4
-  - 5.3
-
 env:
-  - CONCRETE5_VERSION="5.6.2.1" CONCRETE5_URL="http://www.concrete5.org/download_file/-/view/58379/8497/"
+  - REF="" # latest tag
+  - REF="master"
+  - REF="5.7.0-wip"
+  - REF="5.6.1.2"
 
 before_script:
     - composer install
     - echo 'short_open_tag = On' >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-    - curl -sS $CONCRETE5_URL > concrete5.zip
-    - unzip concrete5.zip
-    - mv concrete$CONCRETE5_VERSION web
+    - git clone https://github.com/concrete5/concrete5.git
+    - cd concrete5
+    - git checkout `git describe --abbrev=0 --tags` # checkout latest tag
+    - git checkout $REF # has no effect if REF=""
+    - cd ..
+    - mv concrete5/web web
     - mysql -e 'CREATE DATABASE concrete5_tests;'
     - vendor/bin/install-concrete5.php --db-server=localhost --db-username=travis --db-database=concrete5_tests --admin-email=webmaster@example.org --admin-password=password --target=../../../web
 
 script: phpunit --testsuite all_helpers
+
+matrix:
+  allow_failures:
+    - env: REF="5.7.0-wip"
+    - env: REF="5.6.1.2"
