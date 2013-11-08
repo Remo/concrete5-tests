@@ -35,6 +35,13 @@ class FileHelperTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals("a4a76883426db812ed7e71efbb9fcea0.doc", $this->object->sanitize("日本人.doc"));
         $this->assertEquals("f491ec23fce87df961290adb8fc8f153", $this->object->sanitize("日本人.日本人"));     
     }
+    
+    public function testUnfilename() {
+        $this->assertEquals("BaseFile", $this->object->unfilename("baseFile.doc"));
+        $this->assertEquals("Base File", $this->object->unfilename("base_file.doc"));
+        $this->assertEquals("", $this->object->unfilename(".doc"));
+        $this->assertEquals(" Base File", $this->object->unfilename(" base_file.doc"));
+    }
 
 
 }
