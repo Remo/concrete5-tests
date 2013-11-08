@@ -25,7 +25,18 @@ class TextHelperTest extends PHPUnit_Framework_TestCase
     protected function tearDown()
     {
     }
-
+    
+    public function testAsciify() 
+    {
+        $this->assertEquals("Mixed with English and Germaen", $this->object->asciify("Mixed with English and Germän", "de_DE"));
+        $this->assertEquals("Mixed with English and ", $this->object->asciify("Mixed with English and 日本人"));
+        $this->assertEquals("Mixed with English and .doc", $this->object->asciify("Mixed with English and 日本人.doc"));
+        $this->assertEquals("Mixed with English and .", $this->object->asciify("Mixed with English and 日本人.日本人"));
+        $this->assertEquals("", $this->object->asciify("日本人"));
+        $this->assertEquals(".doc", $this->object->asciify("日本人.doc"));
+        $this->assertEquals(".", $this->object->asciify("日本人.日本人"));
+    }
+ 
     public function testUrlify() 
     {
         $this->assertEquals("this-is-a-simple-test-case", $this->object->urlify("This is a simple test case"));
