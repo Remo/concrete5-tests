@@ -32,6 +32,7 @@ class TextHelperTest extends PHPUnit_Framework_TestCase
         $this->assertEquals ('jetudie-le-francais', $this->object->urlify(' J\'étudie le français '));
         $this->assertEquals ('lo-siento-no-hablo-espanol', $this->object->urlify('Lo siento, no hablo español.'));
         $this->assertEquals ('f3pws', $this->object->urlify('ΦΞΠΏΣ'));
+        $this->assertEquals ('yo-hablo-espanol', $this->object->urlify('¿Yo hablo español?'));
         
         // Test for many rounds with a language, that has no map associated
         // This causes a "regular expression is too large" error on old versions
